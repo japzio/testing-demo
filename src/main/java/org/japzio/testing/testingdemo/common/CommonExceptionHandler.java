@@ -1,5 +1,6 @@
 package org.japzio.testing.testingdemo.common;
 
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -16,9 +17,20 @@ public class CommonExceptionHandler {
                 Map.of(
                         "code", "MSAPP001",
                         "message", e.getMessage(),
-                        "originErrorCode", e.getErrorCode()
+                        "description", e.getErrorCode()
                 )
         );
     }
 
+
+    @ExceptionHandler({ConstraintViolationException.class})
+    public ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException e) {
+        return ResponseEntity.badRequest().body(
+                Map.of(
+                        "code", "MSAPP002",
+                        "message", e.getMessage(),
+                        "description", e.getConstraintViolations().toString()
+                )
+        );
+    }
 }
