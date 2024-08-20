@@ -1,4 +1,4 @@
-package org.japzio.testing.testing_demo;
+package org.japzio.testing.testingdemo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
