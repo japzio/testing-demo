@@ -25,6 +25,17 @@ class MessagingControllerTest {
     }
 
     @Test
+    void getMessageById_Ok() {
+        given()
+                .contentType(ContentType.JSON)
+                .header(new Header("rrn", UUID.randomUUID().toString()))
+                .when()
+                .get("/v1/messaging/" + UUID.randomUUID())
+                .then()
+                .statusCode(200);
+    }
+
+    @Test
     void getMessageById_invalidRrn_shouldThrowBadRequest() {
         given()
                 .contentType(ContentType.JSON)
