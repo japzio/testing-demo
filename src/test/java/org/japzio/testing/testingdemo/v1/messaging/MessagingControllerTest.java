@@ -1,5 +1,7 @@
 package org.japzio.testing.testingdemo.v1.messaging;
 
+import com.maciejwalkowiak.wiremock.spring.ConfigureWireMock;
+import com.maciejwalkowiak.wiremock.spring.EnableWireMock;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Header;
@@ -14,6 +16,9 @@ import static io.restassured.RestAssured.given;
 
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@EnableWireMock({
+        @ConfigureWireMock(name = "user-service", property = "user-client.url")
+})
 class MessagingControllerTest {
 
     @LocalServerPort
