@@ -1,0 +1,21 @@
+{
+  "request": {
+    "method": "GET",
+    "urlPattern": "/v1/message/.*"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "rayId": "{{randomValue type='UUID'}}",
+      "message": "This is a test message!",
+      "sent": "{{now offset='-1 days'}}",
+      "lastRead": "{{now}}"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "transformers": [
+      "response-template"
+    ]
+  }
+}

@@ -1,26 +1,31 @@
 package org.japzio.testing.testingdemo.v1.messaging;
 
-import com.maciejwalkowiak.wiremock.spring.ConfigureWireMock;
-import com.maciejwalkowiak.wiremock.spring.EnableWireMock;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Header;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.wiremock.integrations.testcontainers.WireMockContainer;
 
 import java.util.UUID;
 
 import static io.restassured.RestAssured.given;
 
-
+@Testcontainers
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@EnableWireMock({
-        @ConfigureWireMock(name = "user-service", property = "user-client.url")
-})
 class MessagingControllerTest {
 
+    @RegisterExtension
+    static WireMockExtension wireMock = WireMockExtension.newInstance()
+            .options(
+                    wireMockConfig()
+                            .dynamicPort()
+                            .usingFilesUnderClasspath("wiremock")
+            )
+            .build();
     @LocalServerPort
     private int port;
 
